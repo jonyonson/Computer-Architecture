@@ -7,6 +7,7 @@ LDI = 0b10000010
 PRN = 0b01000111
 MUL = 0b10100010
 
+
 class CPU:
     """Main CPU class."""
 
@@ -94,22 +95,22 @@ class CPU:
 
         while not self.halted:
 
+            ir = self.ram_read(self.pc)
+            operand_count = ir >> 6
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
 
-            op = self.ram_read(self.pc)
-
-            if op == HLT:
+            if ir == HLT:
                 self.halted = True
 
-            elif op == LDI:
+            elif ir == LDI:
                 self.reg[operand_a] = operand_b
-                self.pc += 3
+                self.pc += operand_count + 1
 
-            elif op == PRN:
+            elif ir == PRN:
                 print(self.reg[operand_a])
-                self.pc += 2
+                self.pc += operand_count + 1
 
-            elif op == MUL:
+            elif ir == MUL:
                 self.alu("MUL", operand_a, operand_b)
-                self.pc += 3
+                self.pc += operand_count + 1
