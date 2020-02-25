@@ -17,26 +17,39 @@ class CPU:
 
         self.halted = False
 
-    def load(self):
+    def load(self, filename):
         """Load a program into memory."""
-
+        print(filename)
         address = 0
+        with open(filename) as f:
+            for line in f:
+                comment_split = line.strip().split("#")
+                value = comment_split[0].strip()
+
+                # Ignore blank lines
+                if value == "":
+                    continue
+
+                num = int(value, 2)
+                self.ram[address] = num
+                address += 1
+
 
         # For now, we've just hardcoded a program:
 
-        program = [
-            # From print8.ls8
-            0b10000010, # LDI R0,8
-            0b00000000,
-            0b00001000,
-            0b01000111, # PRN R0
-            0b00000000,
-            0b00000001, # HLT
-        ]
+        # program = [
+        #     # From print8.ls8
+        #     0b10000010, # LDI R0,8
+        #     0b00000000,
+        #     0b00001000,
+        #     0b01000111, # PRN R0
+        #     0b00000000,
+        #     0b00000001, # HLT
+        # ]
 
-        for instruction in program:
-            self.ram[address] = instruction
-            address += 1
+        # for instruction in program:
+        #     self.ram[address] = instruction
+        #     address += 1
 
     def ram_read(self, mar):
         return self.ram[mar]
