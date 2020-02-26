@@ -2,11 +2,17 @@
 
 import sys
 
-HLT = 0b00000001
-LDI = 0b10000010
-PRN = 0b01000111
-MUL = 0b10100010
+HLT  = 0b00000001
+LDI  = 0b10000010
+PRN  = 0b01000111
+MUL  = 0b10100010
+PUSH = 0b01000101
+POP  = 0b01000110
 
+
+IM = 5 # R5 is reserved as the interrupt mask (IM)
+IS = 6 # R6 is reserved as the interrupt status (IS)
+SP = 7 # R7 is reserved as the stack pointer (SP)
 
 class CPU:
     """Main CPU class."""
