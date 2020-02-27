@@ -8,7 +8,9 @@ PRN  = 0b01000111
 MUL  = 0b10100010
 PUSH = 0b01000101
 POP  = 0b01000110
-
+CALL = 0b01010000
+RET  = 0b00010001
+ADD  = 0b10100000
 
 IM = 5 # R5 is reserved as the interrupt mask (IM)
 IS = 6 # R6 is reserved as the interrupt status (IS)
@@ -123,4 +125,21 @@ class CPU:
                 # Increment the SP.
                 self.reg[SP] += 1
 
+                self.pc += operand_count + 1
+
+            elif ir == CALL:
+                self.reg[SP] -= 1
+                self.ram_write(self.pc + 2, self.reg[SP])
+                # self.ram[]
+                self.pc = self.reg[operand_a]
+
+            elif ir == RET:
+                # val = self.ram_read(self.reg[SP])
+                val = self.ram_read(self.reg[7])
+                self.pc = val
+
+                self.reg[SP] += 1
+
+            elif ir == ADD:
+                self.alu("ADD", operand_a, operand_b)
                 self.pc += operand_count + 1
