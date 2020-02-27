@@ -43,22 +43,6 @@ class CPU:
                 address += 1
 
 
-        # For now, we've just hardcoded a program:
-
-        # program = [
-        #     # From print8.ls8
-        #     0b10000010, # LDI R0,8
-        #     0b00000000,
-        #     0b00001000,
-        #     0b01000111, # PRN R0
-        #     0b00000000,
-        #     0b00000001, # HLT
-        # ]
-
-        # for instruction in program:
-        #     self.ram[address] = instruction
-        #     address += 1
-
     def ram_read(self, mar):
         return self.ram[mar]
 
@@ -119,4 +103,24 @@ class CPU:
 
             elif ir == MUL:
                 self.alu("MUL", operand_a, operand_b)
+                self.pc += operand_count + 1
+
+            elif ir == PUSH:
+                # Grab the register argument
+                val = self.reg[operand_a]
+                # Decrement the SP.
+                self.reg[SP] -= 1
+                 # Copy the value in the given register to the address pointed to by SP.
+                self.ram[self.reg[SP]] = val
+
+                self.pc += operand_count + 1
+
+            elif ir == POP:
+                # Grab the value from the top of the stack
+                val = self.ram[self.reg[SP]]
+                # Copy the value from the address pointed to by SP to the given register.
+                self.reg[operand_a] = val
+                # Increment the SP.
+                self.reg[SP] += 1
+
                 self.pc += operand_count + 1
