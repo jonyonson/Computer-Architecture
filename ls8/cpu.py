@@ -23,6 +23,7 @@ class CPU:
         """Construct a new CPU."""
         self.ram = [0] * 256
         self.reg = [0] * 8
+        self.reg[SP] = 0xF4
         self.pc = 0
 
         self.halted = False
