@@ -58,7 +58,6 @@ class CPU:
             self.reg[reg_a] += self.reg[reg_b]
         elif op == "MUL":
             self.reg[reg_a] *= self.reg[reg_b]
-        #elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -130,12 +129,11 @@ class CPU:
             elif ir == CALL:
                 self.reg[SP] -= 1
                 self.ram_write(self.pc + 2, self.reg[SP])
-                # self.ram[]
+
                 self.pc = self.reg[operand_a]
 
             elif ir == RET:
-                # val = self.ram_read(self.reg[SP])
-                val = self.ram_read(self.reg[7])
+                val = self.ram_read(self.reg[SP])
                 self.pc = val
 
                 self.reg[SP] += 1
