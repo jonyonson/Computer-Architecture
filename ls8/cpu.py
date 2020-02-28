@@ -18,6 +18,13 @@ JNE  = 0b01010110
 INC  = 0b01100101
 DEC  = 0b01100110
 PRA  = 0b01001000
+AND  = 0b10101000
+OR   = 0b10101010
+XOR  = 0b10101011
+NOT  = 0b01101001
+SHL  = 0b10101100
+SHR  = 0b10101101
+MOD  = 0b10100100
 
 IM = 5 # R5 is reserved as the interrupt mask (IM)
 IS = 6 # R6 is reserved as the interrupt status (IS)
