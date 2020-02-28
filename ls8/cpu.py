@@ -92,8 +92,8 @@ class CPU:
             self.reg[reg_a] |= self.reg[reg_b]
         # elif op == "XOR":
         #     pass
-        # elif op == "NOT":
-        #     pass
+        elif op == "NOT":
+            self.reg[reg_a] = ~self.reg[reg_a]
         # elif op == "SHL":
         #     pass
         # elif op == "SHR":
