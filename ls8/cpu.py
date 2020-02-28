@@ -85,6 +85,22 @@ class CPU:
             self.reg[reg_a] += 1
         elif op == "DEC":
             self.reg[reg_a] -= 1
+
+        elif op == "AND":
+            self.reg[reg_a] &= self.reg[reg_b]
+        elif op == "OR":
+            self.reg[reg_a] |= self.reg[reg_b]
+        # elif op == "XOR":
+        #     pass
+        # elif op == "NOT":
+        #     pass
+        # elif op == "SHL":
+        #     pass
+        # elif op == "SHR":
+        #     pass
+        # elif op == "MOD"
+        #     pass
+
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -191,3 +207,32 @@ class CPU:
                     self.pc = self.reg[operand_a]
                 else:
                     self.pc += operand_count + 1
+
+            elif ir == AND:
+                self.alu("AND", operand_a, operand_b)
+                self.pc += operand_count + 1
+
+            elif ir == OR:
+                self.alu("OR", operand_a, operand_b)
+                self.pc += operand_count + 1
+
+            # elif ir == XOR:
+            #     self.alu("XOR", operand_a, operand_b)
+            #     self.pc += operand_count + 1
+
+            # elif ir == NOT:
+            #     self.alu("NOT", operand_a, None)
+            #     self.pc += operand_count + 1
+
+            # elif ir == SHL:
+            #     self.alu("SHL", operand_a, operand_b)
+            #     self.pc += operand_count + 1
+
+            # elif ir == SHR:
+            #     self.alu("SHR", operand_a, operand_b)
+            #     self.pc += operand_count + 1
+
+            # elif ir == MOD:
+            #     self.alu("MOD", operand_a, operand_b)
+            #     self.pc += operand_count + 1
+
