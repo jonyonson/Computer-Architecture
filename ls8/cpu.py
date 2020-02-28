@@ -12,6 +12,9 @@ CALL = 0b01010000
 RET  = 0b00010001
 ADD  = 0b10100000
 CMP  = 0b10100111
+JMP  = 0b01010100
+JEQ  = 0b01010101
+JNE  = 0b01010110
 
 IM = 5 # R5 is reserved as the interrupt mask (IM)
 IS = 6 # R6 is reserved as the interrupt status (IS)
@@ -155,3 +158,22 @@ class CPU:
             elif ir == CMP:
                 self.alu("CMP", operand_a, operand_b)
                 self.pc += operand_count + 1
+
+            elif ir == JMP:
+                self.pc = self.reg[operand_a]
+
+            elif ir == JEQ:
+                # If `equal` flag is set (true), jump to the address stored
+                # in the given register.
+                if self.fl == 1:
+                    self.pc = self.reg[operand_a]
+                else:
+                    self.pc += operand_count + 1
+
+            elif ir == JNE:
+                # If `E` flag is clear (false, 0), jump to the address stored
+                # in the given register
+                if self.fl != 1:
+                    self.pc = self.reg[operand_a]
+                else:
+                    self.pc += operand_count + 1
