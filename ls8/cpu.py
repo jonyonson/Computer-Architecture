@@ -15,6 +15,9 @@ CMP  = 0b10100111
 JMP  = 0b01010100
 JEQ  = 0b01010101
 JNE  = 0b01010110
+INC  = 0b01100101
+DEC  = 0b01100110
+PRA  = 0b01001000
 
 IM = 5 # R5 is reserved as the interrupt mask (IM)
 IS = 6 # R6 is reserved as the interrupt status (IS)
@@ -71,6 +74,10 @@ class CPU:
                 self.fl = 0b00000010
             else:
                 self.fl = 0b00000001
+        elif op == "INC":
+            self.reg[reg_a] += 1
+        elif op == "DEC":
+            self.reg[reg_a] -= 1
         else:
             raise Exception("Unsupported ALU operation")
 
