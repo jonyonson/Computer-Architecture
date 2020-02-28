@@ -11,6 +11,7 @@ POP  = 0b01000110
 CALL = 0b01010000
 RET  = 0b00010001
 ADD  = 0b10100000
+CMP  = 0b10100111
 
 IM = 5 # R5 is reserved as the interrupt mask (IM)
 IS = 6 # R6 is reserved as the interrupt status (IS)
@@ -24,6 +25,7 @@ class CPU:
         self.ram = [0] * 256
         self.reg = [0] * 8
         self.reg[SP] = 0xF4
+        self.fl = 0
         self.pc = 0
 
         self.halted = False
@@ -59,6 +61,13 @@ class CPU:
             self.reg[reg_a] += self.reg[reg_b]
         elif op == "MUL":
             self.reg[reg_a] *= self.reg[reg_b]
+        elif op == "CMP":
+            if self.reg[reg_a] < self.reg[reg_b]:
+                self.fl = 0b00000100
+            elif self.reg[reg_a] > self.reg[reg_b]:
+                self.fl = 0b00000010
+            else:
+                self.fl = 0b00000001
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -141,4 +150,8 @@ class CPU:
 
             elif ir == ADD:
                 self.alu("ADD", operand_a, operand_b)
+                self.pc += operand_count + 1
+
+            elif ir == CMP:
+                self.alu("CMP", operand_a, operand_b)
                 self.pc += operand_count + 1
