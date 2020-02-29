@@ -5,7 +5,15 @@
 import sys
 from cpu import *
 
-cpu = CPU()
+def main(argv):
 
-cpu.load()
-cpu.run()
+    cpu = CPU()
+
+    cpu.load(argv[1])
+    cpu.run()
+
+    return 0
+
+
+main(sys.argv)
+
